@@ -10,7 +10,7 @@ while 1:
     count += 1
 
 for i in range(count):
-    if e[i][0] + e[i][1] < e[i][2]:
+    if e[i][0] + e[i][1] <= e[i][2]:
         print('Invalid')
     elif e[i][0]==e[i][1]==e[i][2]:
         print('Equilateral')
