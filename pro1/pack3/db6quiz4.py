@@ -17,7 +17,7 @@ def chulbal():
         sql = """
         select jikwonno 직원번호, jikwonname 직원명, count(gogekno) 관리고객수
         from jikwon
-        right outer join gogek on jikwonno = gogekdamsano
+        inner join gogek on jikwonno = gogekdamsano
         group by jikwonno
         """
         cursor.execute(sql)
