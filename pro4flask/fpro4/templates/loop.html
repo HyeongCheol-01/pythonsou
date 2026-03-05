@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}반복문{% endblock %}
+
+{% block content %}
+<h3>루프 속성 연습</h3>
+
+{% for user in users %}
+    
+        번호: {{ loop.index }}번 | 
+        인덱스: {{ loop.index0 }} | 
+        {% if loop.first %} [시작!] {% endif %}
+        내용: {{ user }}
+        {% if loop.last %} [끝!] {% endif %}
+    <br>
+{% endfor %}
+
+{% endblock %}
