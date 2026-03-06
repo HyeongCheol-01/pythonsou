@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    {% for id, p in products.items() %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h5>{{ p.name }}</h5>
+                <p class="text-danger fs-4 fw-bold">{{ p.price }}원</p>
+                <button onclick="addToCart({{ id }})" class="btn btn-primary w-100">장바구니 담기</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
