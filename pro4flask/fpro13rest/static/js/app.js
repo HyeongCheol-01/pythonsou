@@ -19,17 +19,26 @@ $("#sendBtn").addEventListener("click", async() => { //비동기 처리
     try{
         const res = await fetch(url,{
             method:"GET",
-            headers:{"Accept":"application/json"};  // 응답 본문을 JSON으로 파싱해서 JS객체화
+            headers:{"Accept":"application/json"}  // 응답 본문을 JSON으로 파싱해서 JS객체화
         });
 
         const data = await res.json();
 
-        if(!res.ok || data.ok === false){
-            $("#result").innerHTML =
-            `<span class="error"`
+        if (!res.ok || data.ok === false) {
+            // 에러 메시지 출력 (닫는 태그 추가)
+            $("#result").innerHTML = `<span style="color:red;">오류: ${data.error || '알 수 없는 에러'}</span>`;
+        } else {
+            // 성공 시 결과 출력
+            $("#result").innerHTML = `
+                <div style="margin-top: 20px; padding: 15px; border-radius: 8px; border: 1px solid #ddd; background-color: #fcfcfc;">
+                    <p><strong>이름:</strong> ${data.name}</p>
+                    <p><strong>나이:</strong> ${data.age}세</p>
+                    <p><strong>연령대:</strong> ${data.age_group}</p>
+                    <p style="color: blue; border-top: 1px dashed #ccc; pt-2;"><strong>메시지:</strong> ${data.message}</p>
+                </div>
+            `;
         }
-    }catch(err){
-        $("#result").innerHTML = `<span class="error">네트워크, 파싱 오류 : ${err}</span>`
+    } catch (err) {
+        $("#result").innerHTML = `<span class="error">네트워크/파싱 오류: ${err.message}</span>`;
     }
-    
 });
