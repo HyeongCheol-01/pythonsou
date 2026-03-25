@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>직원 데이터 분석 결과</h1>
+
+    <h3>1) 직원 정보 목록</h3>
+    {{ jikwondata|safe }}
+
+    <h3>2) 부서별 연봉 통계</h3>
+    {{ statsdata|safe }}
+
+    <h3>3) 부서별 연봉 합계 그래프</h3>
+    {% if jikwondata != "직원 정보가 없어요" %}
+        <img src="{{ url_for('static', filename='chart.png')}}" alt="부서별 연봉 차트">
+    {% else %}
+        <p>데이터가 없어 그래프를 표시할 수 없습니다.</p>
+    {% endif %}
+
+    <h3>4) 성별 / 직급별 빈도표</h3>
+    {{ freqdata|safe }}
+
+    <h3>5) 부서별 최고 연봉자</h3>
+    {{ top_data|safe }}
+
+    <h3>6) 부서별 직원 비율</h3>
+    <p><strong>{{ total_msg }}</strong></p>
+    {{ ratiodata|safe }}
+</body>
+</html>
