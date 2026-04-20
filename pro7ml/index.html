@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>연봉 예측</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h2>근무년수 -> 예상 연봉(LinearRegression)</h2>
+
+    근무년수 : <input type="text" id="years" value="3">
+    <button type="button" id="btn">확인</button>
+
+    <div style="margin-top:15px; background:#f3f3f3; width:280px; padding:10px;">
+        <div><b>예상연봉액 : <span id="predArea">{{ pred }}</span></b></div>
+        <div>설명력(R²) : <b><span id="r2Area">{{ r2 }}</span>%</b></div>
+        <div>회귀식 : <b>pay = <span id="coefArea">{{ coef }}</span> * years + <span id="interceptArea">{{ intercept }}</span></b></div>
+    </div>
+
+    <h3>직급별 연봉평균</h3>
+    <table border="1">
+        <tr>
+            <th>직급</th>
+            <th>평균 연봉</th>
+        </tr>
+        {% for row in jik_avg %}
+        <tr>
+            <td>{{ row['jikwonjik'] }}</td>
+            <td>{{ "{:,.0f}".format(row['avg_pay']) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+<script>
+    // 확인 버튼을 클릭하면 실행
+    $('#btn').click(function(){
+
+        // Ajax로 서버에 비동기 요청
+        $.ajax({
+            url:'/predict',   // 요청 보낼 주소
+            type:'POST',      // 요청 방식
+            data:{years:$('#years').val()},  // 입력한 근무년수를 서버로 전송
+
+            // 서버 요청 성공 시 실행
+            success:function(data){
+                console.log('서버 응답:', data); // 응답 확인용
+
+                // 서버가 보낸 결과를 화면에 출력
+                $('#predArea').text(data.pred);
+                $('#r2Area').text(data.r2);
+                $('#coefArea').text(data.coef);
+                $('#interceptArea').text(data.intercept);
+            },
+
+            // 서버 요청 실패 시 실행
+            error:function(){
+                alert('오류 발생');
+            }
+        });
+    });
+</script>
+    </script>
+</body>
+</html>
